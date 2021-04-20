@@ -2,6 +2,7 @@
 from events_app import db
 from sqlalchemy.orm import backref
 
+
 # TODO: Create a model called `Guest` with the following fields:
 # - id: primary key
 # - name: String column
@@ -30,7 +31,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(80), nullable=False)
-    date_and_time = db.Column(db.DateTime())
+    date_and_time =  db.Column(db.Date)
     guests = db.relationship('Guest', secondary='guest_event_table', back_populates='events_attending')
 
 # TODO: Create a table `guest_event_table` with the following columns:
@@ -38,7 +39,6 @@ class Event(db.Model):
 # - guest_id: Integer column (foreign key)
 
 guest_event_table = db.Table('guest_event_table', 
-db.Column('guest_id', db.Integer, db.ForeignKey('guest.id')),
-db.Column('event_id', db.Integer, db.ForeignKey('event.id'))
-
+    db.Column('guest_id', db.Integer, db.ForeignKey('guest.id')),
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id'))
 )
